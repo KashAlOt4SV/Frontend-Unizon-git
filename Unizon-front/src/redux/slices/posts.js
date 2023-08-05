@@ -6,6 +6,11 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
     return data;
 });
 
+export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
+    const {data} = await axios.get('/tags');
+    return data;
+});
+
 const initialState = {
     posts: {
         items: [],
@@ -20,7 +25,21 @@ const initialState = {
 const postSlice = createSlice({
     name: 'posts',
     initialState,
-    reducer: {},
+    reducers: {},
+    extraReducers: {
+        [fetchPosts.pedding]: (state) => {
+            state.posts.items = [];
+            state.posts.status = 'loading';
+        },
+        [fetchPosts.fulfilled]: (state, action) => {
+            state.posts.items = action.payload;
+            state.posts.status = 'loaded';
+        },
+        [fetchPosts.rejected]: (state) => {
+            state.posts.items = [];
+            state.posts.status = 'error';
+        },
+    },
 });
 
 export const postsReducer = postSlice.reducer;
