@@ -16,8 +16,7 @@ export const Login = () => {
   const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch();
   const { register, 
-    handleSubmit, 
-    setError, 
+    handleSubmit,
     formState: {errors, isValid},
   } = useForm( {
       defaultValues: {
@@ -63,7 +62,7 @@ if (isAuth) {
         helperText={errors.password?.message}
         {...register('password', {required: 'Укажите пароль'})}
         fullWidth />
-        <Button type='submit' size="large" variant="contained" fullWidth>
+        <Button disabled = {!isValid} type='submit' size="large" variant="contained" fullWidth>
           Войти
         </Button>
       </form>
