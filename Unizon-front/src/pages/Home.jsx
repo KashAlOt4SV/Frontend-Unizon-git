@@ -1,13 +1,12 @@
 import React from 'react';
 import Tabs from '@mui/material/Tabs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useState } from 'react-redux';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import axios from '../axios';
 import { fetchPosts, fetchTags, fetchNewestPosts, fetchPopularPosts } from '../redux/slices/posts';
 
 export const Home = () => {
@@ -31,10 +30,16 @@ export const Home = () => {
     dispatch(fetchPopularPosts());
   };
 
+  const [value, setValue] = React.useState(0)
+
+  const handleTabs = (e, val) => {
+    console.warn(val)
+    setValue(val)
+  }
 
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
+      <Tabs style={{ marginBottom: 15 }} value={value} aria-label="basic tabs example" onChange={handleTabs}>
         <Tab label="Новые" onClick = {onClickNewestPosts} />
         <Tab label="Популярные" onClick = {onClickPopularPosts} />
       </Tabs>
