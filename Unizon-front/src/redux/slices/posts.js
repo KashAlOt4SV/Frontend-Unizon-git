@@ -15,6 +15,16 @@ export const fetchRemovePosts = createAsyncThunk('posts/fetchRemovePosts', async
 axios.delete(`/posts/${id}`)
 );
 
+export const fetchNewestPosts = createAsyncThunk('posts/fetchNewestPosts', async () => {
+    const {data} = await axios.get('/posts/newest');
+    return data;
+});
+
+export const fetchPopularPosts = createAsyncThunk('posts/fetchPopularPosts', async () => {
+    const {data} = await axios.get('/posts/popular');
+    return data;
+});
+
 const initialState = {
     posts: {
         items: [],
@@ -46,7 +56,7 @@ const postSlice = createSlice({
         },
 
         // Получение тэгов
-        [fetchTags.pedding]: (state) => {
+        [fetchTags.pending]: (state) => {
             state.tags.items = [];
             state.tags.status = 'loading';
         },
@@ -62,6 +72,34 @@ const postSlice = createSlice({
         // Удаление статьи
         [fetchRemovePosts.pending]: (state, action) => {
             state.posts.items =  state.posts.items.filter((obj) => obj._id !== action.meta.arg);
+        },
+
+        // Сортировка по новым постам
+        [fetchNewestPosts.pending]: (state) => {
+            state.posts.items = [];
+            state.posts.status = 'loading';
+        },
+        [fetchNewestPosts.fulfilled]: (state, action) => {
+            state.posts.items = action.payload;
+            state.posts.status = 'loaded';
+        },
+        [fetchNewestPosts.rejected]: (state) => {
+            state.posts.items = [];
+            state.posts.status = 'error';
+        },
+
+        // Сортировка по популярным постам
+        [fetchPopularPosts.pending]: (state) => {
+            state.posts.items = [];
+            state.posts.status = 'loading';
+        },
+        [fetchPopularPosts.fulfilled]: (state, action) => {
+            state.posts.items = action.payload;
+            state.posts.status = 'loaded';
+        },
+        [fetchPopularPosts.rejected]: (state) => {
+            state.posts.items = [];
+            state.posts.status = 'error';
         },
     },
 });
