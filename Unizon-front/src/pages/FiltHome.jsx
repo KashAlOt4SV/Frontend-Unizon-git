@@ -9,7 +9,7 @@ import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import { fetchPosts, fetchTags, fetchNewestPosts, fetchPopularPosts, fetchTagsName } from '../redux/slices/posts';
 
-export const Home = () => {
+export const FiltHome = () => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.auth.data);
   const {posts, tags} = useSelector(state => state.posts);
