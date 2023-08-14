@@ -36,7 +36,7 @@ if (isLoading) {
       <Post
         id={data._id}
         title={data.title}
-        imageUrl={`http://localhost:5555${data.imageUrl}`}
+        imageUrl={data.imageUrl ? `http://localhost:5555${data.imageUrl}` : ''}
         user={data.user}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}
