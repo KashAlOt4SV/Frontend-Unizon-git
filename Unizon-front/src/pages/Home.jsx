@@ -8,8 +8,7 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 import axios from '../axios';
-import { fetchPosts } from '../redux/slices/posts';
-import { fetchTags } from '../redux/slices/posts';
+import { fetchPosts, fetchTags, fetchNewestPosts, fetchPopularPosts } from '../redux/slices/posts';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -22,14 +21,22 @@ export const Home = () => {
   React.useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
-
   }, []);
+
+  const onClickNewestPosts = () => {
+    dispatch(fetchNewestPosts());
+  };
+
+  const onClickPopularPosts = () => {
+    dispatch(fetchPopularPosts());
+  };
+
 
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-        <Tab label="Новые" />
-        <Tab label="Популярные" />
+        <Tab label="Новые" onClick = {onClickNewestPosts} />
+        <Tab label="Популярные" onClick = {onClickPopularPosts} />
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
