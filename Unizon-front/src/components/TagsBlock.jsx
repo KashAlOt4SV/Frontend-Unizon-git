@@ -1,4 +1,6 @@
 import React from "react";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -15,9 +17,9 @@ export const TagsBlock = ({ items, isLoading = true }) => {
     <SideBlock title="Тэги">
       <List>
         {(isLoading ? [...Array(5)] : items).map((name, i) => (
-          <a 
+          <Link
             style={{ textDecoration: "none", color: "black" }}
-            href={`/tags/${name}`}
+            to={`/tags/${name}`}
           >
             <ListItem key={i} disablePadding>
               <ListItemButton>
@@ -31,7 +33,7 @@ export const TagsBlock = ({ items, isLoading = true }) => {
                 )}
               </ListItemButton>
             </ListItem>
-          </a>
+          </Link>
         ))}
       </List>
     </SideBlock>

@@ -17,10 +17,12 @@ export const FiltHome = () => {
   const userData = useSelector(state => state.auth.data);
   const {posts, tags} = useSelector(state => state.posts);
 
+
   const isPostsLoading = posts.status == 'loading';
   const isTagsLoading = tags.status == 'loading';
   
 
+  
   React.useEffect(() => {
     dispatch(fetchFilterPosts(params.name));
     dispatch(fetchTags());

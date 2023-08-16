@@ -29,11 +29,7 @@ export const Home = () => {
   const onClickPopularPosts = () => {
     dispatch(fetchPopularPosts());
   };
-
-  const onClickTagsName = () => {
-    dispatch(fetchTagsName());
-  };
-
+  
   const [value, setValue] = React.useState(0)
 
   const handleTabs = (e, val) => {

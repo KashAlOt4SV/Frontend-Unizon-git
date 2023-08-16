@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
@@ -11,7 +11,7 @@ import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
-import { fetchRemovePosts, fetchTagsName } from '../../redux/slices/posts';
+import { fetchRemovePosts, fetchTagsName, fetchFilterPosts } from '../../redux/slices/posts';
 
 export const Post = ({
   id,
