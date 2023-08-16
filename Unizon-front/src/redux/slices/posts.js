@@ -17,7 +17,7 @@ export const fetchTagsName = createAsyncThunk('posts/fetchTagsName', async (name
 });
 
 export const fetchRemovePosts = createAsyncThunk('posts/fetchRemovePosts', async (id) => 
-axios.delete(`/posts/${id}`)
+    axios.delete(`/posts/${id}`)
 );
 
 export const fetchNewestPosts = createAsyncThunk('posts/fetchNewestPosts', async () => {
@@ -27,8 +27,16 @@ export const fetchNewestPosts = createAsyncThunk('posts/fetchNewestPosts', async
 
 export const fetchPopularPosts = createAsyncThunk('posts/fetchPopularPosts', async () => {
     const {data} = await axios.get('/posts/popular');
+    console.log(data);
     return data;
 });
+
+export const fetchFilterPosts = createAsyncThunk('posts/fetchFilterPosts', async (name) => {
+    const {data} = await axios.get(`/tags/${name}`);
+    console.log(`/tags/${name}`)
+    return data;
+});
+
 
 const initialState = {
     posts: {

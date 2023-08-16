@@ -1,51 +1,35 @@
 import React from 'react';
 import Tabs from '@mui/material/Tabs';
-import { useDispatch, useSelector, useState } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
+import {useParams} from "react-router-dom";
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
-import { fetchPosts, fetchTags, fetchNewestPosts, fetchPopularPosts, fetchTagsName } from '../redux/slices/posts';
+import { fetchFilterPosts, fetchTags } from '../redux/slices/posts';
 
 export const FiltHome = () => {
+  const params = useParams();  
+  const name = params.name
   const dispatch = useDispatch();
   const userData = useSelector(state => state.auth.data);
   const {posts, tags} = useSelector(state => state.posts);
 
   const isPostsLoading = posts.status == 'loading';
   const isTagsLoading = tags.status == 'loading';
+  
 
   React.useEffect(() => {
-    dispatch(fetchPosts());
+    dispatch(fetchFilterPosts(params.name));
     dispatch(fetchTags());
   }, []);
 
-  const onClickNewestPosts = () => {
-    dispatch(fetchNewestPosts());
-  };
-
-  const onClickPopularPosts = () => {
-    dispatch(fetchPopularPosts());
-  };
-
-  const onClickTagsName = () => {
-    dispatch(fetchTagsName());
-  };
-
-  const [value, setValue] = React.useState(0)
-
-  const handleTabs = (e, val) => {
-    console.warn(val)
-    setValue(val)
-  } 
-
   return (
     <>
-      <Tabs style={{ marginBottom: 15 }} value={value} aria-label="basic tabs example" onChange={handleTabs}>
-        <Tab label="Новые" onClick = {onClickNewestPosts} />
-        <Tab label="Популярные" onClick = {onClickPopularPosts} />
+      <Tabs style={{ marginBottom: 15, }} aria-label="basic tabs example">
+        <Tab label={`#${name}`} />
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
@@ -68,7 +52,7 @@ export const FiltHome = () => {
         )}
         </Grid>
         <Grid xs={4} item>
-          <TagsBlock items={tags.items} isLoading={isTagsLoading}/>
+          <TagsBlock items={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
             items={[
               {
