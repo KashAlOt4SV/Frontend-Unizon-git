@@ -13,7 +13,7 @@ import axios from '../../axios';
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
-import { fetchRemovePosts, fetchTagsName, fetchDoLike, fetchIsLike } from '../../redux/slices/posts';
+import { fetchRemovePosts, fetchTagsName, fetchDoLike, fetchIsLike, fetchFilterPosts } from '../../redux/slices/posts';
 
 export const Post = ({
   id,

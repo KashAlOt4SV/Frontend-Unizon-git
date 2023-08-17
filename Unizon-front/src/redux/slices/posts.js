@@ -11,13 +11,8 @@ export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
     return data;
 });
 
-export const fetchTagsName = createAsyncThunk('posts/fetchTagsName', async (name) => {
-    const {data} = await axios.get(`/tags/${name}`);
-    return data;
-});
-
 export const fetchRemovePosts = createAsyncThunk('posts/fetchRemovePosts', async (id) => 
-axios.delete(`/posts/${id}`)
+    axios.delete(`/posts/${id}`)
 );
 
 export const fetchNewestPosts = createAsyncThunk('posts/fetchNewestPosts', async () => {
@@ -27,6 +22,12 @@ export const fetchNewestPosts = createAsyncThunk('posts/fetchNewestPosts', async
 
 export const fetchPopularPosts = createAsyncThunk('posts/fetchPopularPosts', async () => {
     const {data} = await axios.get('/posts/popular');
+    console.log(data);
+    return data;
+});
+
+export const fetchFilterPosts = createAsyncThunk('posts/fetchFilterPosts', async (name) => {
+    const {data} = await axios.get(`/tags/${name}`);
     return data;
 });
 
@@ -123,15 +124,15 @@ const postSlice = createSlice({
         },
 
         // Фильтрация постов по тэгам
-        [fetchTagsName.pending]: (state) => {
+        [fetchFilterPosts.pending]: (state) => {
             state.posts.items = [];
             state.posts.status = 'loading';
         },
-        [fetchTagsName.fulfilled]: (state, action) => {
+        [fetchFilterPosts.fulfilled]: (state, action) => {
             state.posts.items = action.payload;
             state.posts.status = 'loaded';
         },
-        [fetchTagsName.rejected]: (state) => {
+        [fetchFilterPosts.rejected]: (state) => {
             state.posts.items = [];
             state.posts.status = 'error';
         },
