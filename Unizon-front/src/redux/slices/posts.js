@@ -26,10 +26,6 @@ export const fetchPopularPosts = createAsyncThunk('posts/fetchPopularPosts', asy
     return data;
 });
 
-export const fetchFilterPosts = createAsyncThunk('posts/fetchFilterPosts', async (name) => {
-    const {data} = await axios.get(`/tags/${name}`);
-    return data;
-});
 
 export const fetchFilterPosts = createAsyncThunk('posts/fetchFilterPosts', async (name) => {
     const {data} = await axios.get(`/tags/${name}`);
