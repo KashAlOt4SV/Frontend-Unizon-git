@@ -31,6 +31,12 @@ export const fetchFilterPosts = createAsyncThunk('posts/fetchFilterPosts', async
     return data;
 });
 
+export const fetchFilterPosts = createAsyncThunk('posts/fetchFilterPosts', async (name) => {
+    const {data} = await axios.get(`/tags/${name}`);
+    console.log(`/tags/${name}`)
+    return data;
+});
+
 export const fetchDoLike = createAsyncThunk('posts/fetchDoLike', async (id) => {
     const {data} = await axios.patch(`/like/${id}`);
     return data;
