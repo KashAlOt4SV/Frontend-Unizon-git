@@ -99,6 +99,7 @@ $blue: #4361ee;
   list-style: none;
   padding: 0;
   margin: 20px 0 0 0;
+  display: flex;
 
   li {
     display: inline-flex;
@@ -155,4 +156,20 @@ $blue: #4361ee;
   border-radius: 10px;
   opacity: 0;
   transition: all 0.15s ease-in-out;
+}
+
+.LikeButtonEmpty {
+  color: gray;
+
+  &:hover {
+    color: #a42eff;
+  }
+}
+
+.LikeButtonFull {
+  color: #a42eff;
+}
+
+.Like {
+  margin-right: 25px;
 }

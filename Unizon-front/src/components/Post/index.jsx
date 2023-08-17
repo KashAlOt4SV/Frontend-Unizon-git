@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
@@ -7,11 +7,13 @@ import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import axios from '../../axios';
 
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
-import { fetchRemovePosts, fetchTagsName } from '../../redux/slices/posts';
+import { fetchRemovePosts, fetchTagsName, fetchDoLike, fetchIsLike } from '../../redux/slices/posts';
 
 export const Post = ({
   id,
@@ -26,7 +28,23 @@ export const Post = ({
   isFullPost,
   isLoading,
   isEditable,
+  like,
 }) => {
+
+
+  const [IsLike, setIsLike] = React.useState();
+
+  React.useEffect(() => {
+    console.log(id);
+  axios
+    .get(`/IsLike/${id}`)
+    .then((res) => {
+      if (res.data.IsLike != undefined) {setIsLike(res.data.IsLike)};
+    })
+  }, []);
+
+  console.log(IsLike);
+  
   const dispatch = useDispatch();
   if (isLoading) {
     return <PostSkeleton />;
@@ -37,6 +55,15 @@ export const Post = ({
       dispatch(fetchRemovePosts(id));
     }
   };
+
+  const onClickDoLike = () => {
+    dispatch(fetchDoLike(id));
+  };
+
+  const menuStyle = clsx({
+    [styles.LikeButtonEmpty] : !IsLike, 
+    [styles.LikeButtonFull] : IsLike
+}) 
 
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
@@ -73,16 +100,23 @@ export const Post = ({
             ))}
           </ul>
           {children && <div className={styles.content}>{children}</div>}
-          <ul className={styles.postDetails}>
-            <li>
-              <EyeIcon />
-              <span>{viewsCount}</span>
-            </li>
-            <li>
-              <CommentIcon />
-              <span>{commentsCount}</span>
-            </li>
-          </ul>
+            <div>
+              <ul className={styles.postDetails}>
+                <div className={styles.Like}>
+                  <IconButton  className = {menuStyle} onClick={onClickDoLike}>
+                  <FavoriteIcon />
+                </IconButton>
+                </div>
+                <li>
+                  <CommentIcon />
+                  <span>{commentsCount}</span>
+                </li>
+                <li>
+                    <EyeIcon />
+                  <span>{viewsCount}</span>
+                </li>
+              </ul>
+            </div>
         </div>
       </div>
     </div>
