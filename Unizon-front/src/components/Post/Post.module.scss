@@ -160,9 +160,11 @@ $blue: #4361ee;
 
 .LikeButtonEmpty {
   color: gray;
+  transition: width 2s ease;
 
   &:hover {
     color: #a42eff;
+    transition: width .5s ease;
   }
 }
 

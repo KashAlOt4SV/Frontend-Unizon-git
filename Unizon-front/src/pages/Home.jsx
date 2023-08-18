@@ -37,6 +37,8 @@ export const Home = () => {
     setValue(val)
   } 
 
+  console.log(posts.items)
+
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={value} aria-label="basic tabs example" onChange={handleTabs}>
@@ -59,6 +61,7 @@ export const Home = () => {
               commentsCount={3}
               tags={obj.tags}
               isEditable = {userData?._id == obj.user._id}
+              likesCount = {obj.likesCount}
             />
           )
         )}

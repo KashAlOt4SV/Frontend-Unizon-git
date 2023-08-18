@@ -44,6 +44,17 @@ export const fetchIsLike = createAsyncThunk('posts/fetchIsLike', async (id) => {
     return data;
 });
 
+export const fetchUserLike = createAsyncThunk('posts/fetchUserLike', async () => {
+    const {data} = await axios.get(`/UserLikes/`);
+    return data;
+});
+
+export const fetchCountLikes = createAsyncThunk('posts/fetchCountLikes', async (id) => {
+    const {data} = await axios.get(`/like/:id`);
+    return data;
+});
+
+
 const initialState = {
     posts: {
         items: [],
@@ -154,6 +165,20 @@ const postSlice = createSlice({
         },
 
         // Лайкнул ли пользователь данн
+        [fetchUserLike.pending]: (state) => {
+            state.likes.items = [];
+            state.likes.status = 'loading';
+        },
+        [fetchUserLike.fulfilled]: (state, action) => {
+            state.likes.items = action.payload;
+            state.likes.status = 'loaded';
+        },
+        [fetchUserLike.rejected]: (state) => {
+            state.likes.items = [];
+            state.likes.status = 'error';
+        },
+
+        // Список постов, который пользователь лайкнул
         [fetchIsLike.pending]: (state) => {
             state.likes.items = [];
             state.likes.status = 'loading';
@@ -166,6 +191,22 @@ const postSlice = createSlice({
             state.likes.items = [];
             state.likes.status = 'error';
         },
+        // Количество лайков
+         [fetchCountLikes.pending]: (state) => {
+            state.likes.items = [];
+            state.likes.status = 'loading';
+        },
+        [fetchCountLikes.fulfilled]: (state, action) => {
+            state.likes.items = action.payload;
+            state.likes.status = 'loaded';
+        },
+        [fetchCountLikes.rejected]: (state) => {
+            state.likes.items = [];
+            state.likes.status = 'error';
+        },
     }});
+        
+        
+
 
 export const postsReducer = postSlice.reducer;
