@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link, useParams } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { Link, useParams, useNavigate, Navigate } from "react-router-dom";
+import { useDispatch, useSelector  } from 'react-redux';
 import clsx from 'clsx';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -9,11 +9,12 @@ import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import axios from '../../axios';
+import { UserID, selectIsAuth } from "../../redux/slices/auth";
 
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
-import { fetchRemovePosts, fetchTagsName, fetchDoLike, fetchIsLike, fetchFilterPosts } from '../../redux/slices/posts';
+import { fetchRemovePosts, fetchDoLike, fetchCountLikes} from '../../redux/slices/posts';
 
 export const Post = ({
   id,
@@ -28,28 +29,35 @@ export const Post = ({
   isFullPost,
   isLoading,
   isEditable,
-  like,
+  likesCount,
 }) => {
 
-
-  const [IsLike, setIsLike] = React.useState();
-
-  React.useEffect(() => {
-    console.log(id);
-  axios
-    .get(`/IsLike/${id}`)
-    .then((res) => {
-      if (res.data.IsLike != undefined) {setIsLike(res.data.IsLike)};
-    })
-  }, []);
-
-  console.log(IsLike);
-  
+  const [UserLikes, setUserLikes] = React.useState();
   const dispatch = useDispatch();
+  
+  const isAuth = useSelector(UserID);
+  const userData = useSelector(state => state.auth.data);
+  
+  
+  React.useEffect(() => {
+  if (id===undefined) {
+    console.warn("Id is undefined!")
+  }
+  else{
+    axios
+    .get(`/UserLikes/${id}`)
+    .then((res) => {
+      setUserLikes(res.data);
+    })
+  }
+  
+}, []);
+  
+  const ArrOfLikes = UserLikes ?? [];
   if (isLoading) {
     return <PostSkeleton />;
   }
-
+  
   const onClickRemove = () => {
     if (window.confirm('Вы уверены что хотите удалить статью?')){
       dispatch(fetchRemovePosts(id));
@@ -58,13 +66,22 @@ export const Post = ({
 
   const onClickDoLike = () => {
     dispatch(fetchDoLike(id));
+    
   };
+  
+  
 
-  const menuStyle = clsx({
-    [styles.LikeButtonEmpty] : !IsLike, 
-    [styles.LikeButtonFull] : IsLike
-}) 
-
+  function DoLikesArray(LikesArray){
+    if (LikesArray !== []){
+      for (var i = 0; i < LikesArray.length; i++) {
+      if (LikesArray[i] == userData._id){
+        return true;
+      }
+    }
+    return false;
+    }
+  }
+  const IsLike = DoLikesArray(ArrOfLikes);
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       {isEditable && (
@@ -103,8 +120,9 @@ export const Post = ({
             <div>
               <ul className={styles.postDetails}>
                 <div className={styles.Like}>
-                  <IconButton  className = {menuStyle} onClick={onClickDoLike}>
+                <IconButton  className={clsx(styles.LikeButtonEmpty, { [styles.LikeButtonFull]: IsLike })} onClick={onClickDoLike}>
                   <FavoriteIcon />
+                  <span>{likesCount}</span>
                 </IconButton>
                 </div>
                 <li>
