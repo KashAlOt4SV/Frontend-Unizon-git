@@ -1,22 +1,64 @@
 .root {
-  width: 400px;
+  width: 450px;
   padding: 50px;
   border: 1px solid #dedede;
   margin: 50px auto;
+  font-family: "Gill Sans", sans-serif;
+  font-size: 12px !important;
+  font-weight: bold !important;
 }
 
 .field {
   margin-bottom: 20px !important;
+  text-emphasis-color: #a42eff;
+  font-family: "Gill Sans", sans-serif;
+  font-size:12px !important;
+  font-weight: bold !important;
 }
 
 .title {
   text-align: center !important;
   font-weight: bold !important;
   margin-bottom: 30px !important;
+  
 }
 
 .avatar {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 30px;
+}
+
+.avatarIMG{
+  width: 100px; 
+  height: 150px;
+}
+.avatarBut{
+  margin-left: 40px;
+  width: 150px;
+  height: 50px;
+}
+
+.select{
+  text-align: center !important;
+  font-weight: bold !important;
+  margin-bottom: 20px !important;
+  display: flex;
+  padding: 15px !important;
+  width: 350px;
+  color: #a42eff;
+  font-family: "Gill Sans", sans-serif;
+  font-size:12px !important;
+  font-weight: bold !important;
+  border: 1px solid #dedede;
+}
+
+.signButton {
+  background-color: #a42eff;
+}
+
+.signButtonLink {
+  text-decoration: none !important;
+  color: #FFFFFF;
 }

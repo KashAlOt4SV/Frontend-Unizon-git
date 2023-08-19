@@ -8,13 +8,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+
 import axios from '../../axios';
 import { UserID, selectIsAuth } from "../../redux/slices/auth";
 
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
-import { fetchRemovePosts, fetchDoLike, fetchCountLikes} from '../../redux/slices/posts';
+import { fetchRemovePosts, fetchDoLike, fetchCountLikes, fetchIsLike} from '../../redux/slices/posts';
 
 export const Post = ({
   id,
