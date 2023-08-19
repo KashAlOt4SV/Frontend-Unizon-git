@@ -20,9 +20,10 @@
   border-radius: 5px;
   padding: 0 10px;
   text-decoration: none;
-
+  transition: width 2s ease;
   &:hover {
-    background-color: #4361ee;
+    background-color: #a42eff;
+    transition: width .5s ease;
   }
 }
 

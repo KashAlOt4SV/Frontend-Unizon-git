@@ -1,7 +1,9 @@
 import React from "react";
 import {useParams} from "react-router-dom";
 import axios from "../axios";
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
+
+
 
 import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
@@ -9,7 +11,6 @@ import { CommentsBlock } from "../components/CommentsBlock";
 
 export const FullPost = () => {
   const params = useParams();
-  console.log(params);
   const [data, setData] = React.useState();
   const [isLoading, setLoading] = React.useState(true);
   const { id } = useParams();
@@ -26,6 +27,7 @@ React.useEffect(() => {
       alert('Ошибка при получении статьи');
     })
 }, []);
+
 
 if (isLoading) {
   return <Post isLoading={isLoading} isFullPost/>;
