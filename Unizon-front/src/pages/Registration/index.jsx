@@ -58,6 +58,13 @@ if (isAuth) {
           label="Полное имя" 
           fullWidth />
         <TextField 
+          error={Boolean(errors.SurName?.message)}
+          helperText={errors.SurName?.message}
+          {...register('SurName', {required: 'Укажите фамилию'})}
+          className={styles.field} 
+          label="Фамилия" 
+          fullWidth />
+        <TextField 
           error={Boolean(errors.email?.message)}
           helperText={errors.email?.message}
           tupe = "email"
@@ -72,6 +79,13 @@ if (isAuth) {
           {...register('password', {required: 'Укажите пароль'})}
           className={styles.field} 
           label="Пароль" 
+          fullWidth />
+        <TextField 
+          error={Boolean(errors.UserType?.message)}
+          helperText={errors.UserType?.message}
+          {...register('UserType', {required: 'Укажите фамилию'})}
+          className={styles.field} 
+          label="Фамилия" 
           fullWidth />
         <Button disabled = {!isValid} type='submit' size="large" variant="contained" fullWidth>
           Зарегистрироваться
