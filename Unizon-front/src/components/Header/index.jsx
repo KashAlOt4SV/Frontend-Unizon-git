@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import styles from './Header.module.scss';
 import Container from '@mui/material/Container';
 import {selectIsAuth, logout  } from "../../redux/slices/auth";
+import { Navigate } from "react-router-dom";
 
 export const Header = () => {
   const isAuth = useSelector(selectIsAuth)
@@ -16,8 +17,7 @@ export const Header = () => {
       dispatch(logout());
       window.localStorage.removeItem('token')
     }
-    
-  };
+};
 
   return (
     <div className={styles.root}>

@@ -26,7 +26,18 @@
 .avatar {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 30px;
+}
+
+.avatarIMG{
+  width: 100px; 
+  height: 150px;
+}
+.avatarBut{
+  margin-left: 40px;
+  width: 150px;
+  height: 50px;
 }
 
 .select{
@@ -45,4 +56,9 @@
 
 .signButton {
   background-color: #a42eff;
+}
+
+.signButtonLink {
+  text-decoration: none !important;
+  color: #FFFFFF;
 }

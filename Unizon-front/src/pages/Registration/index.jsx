@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import axios from '../../axios'
 
 
 import { styled } from '@mui/material/styles';
@@ -15,12 +16,27 @@ import { Navigate } from "react-router-dom";
 import styles from './Login.module.scss';
 import { fetchAuth, fetchRegister, selectIsAuth } from "../../redux/slices/auth";
 import { purple, deepPurple } from '@mui/material/colors';
-import { NativeSelect } from '@mui/material';
 
 export const Registration = () => {
   const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch();
   const [TypeOfUser, setTypeOfUser] = React.useState('');
+  const [imageUrl, setImageUrl] = React.useState('');
+
+  const handleChangeFile = async(event) => {
+    try {
+      const formData = new FormData();
+      const file = event.target.files[0];
+      formData.append('image', file);
+      const { data } = await axios.post('/upload', formData);
+      setImageUrl(data.url);
+      {register('avatarUrl')};
+    } catch (err) {
+      console.warn(err);
+      alert('Ошибка при загрузке файла!')
+    }
+  };
+  const inputFileRef = React.useRef(null);
 
   const handleChange = (event) => {
     setTypeOfUser(event.target.value);
@@ -34,6 +50,8 @@ export const Registration = () => {
         email: '',
         password: '',
         TypeOfUser: '',
+        interests: '', 
+        avatarUrl:'',
       },
       mode: 'all',
   });
@@ -49,46 +67,18 @@ export const Registration = () => {
     window.localStorage.setItem('token', data.payload.token);
   }
 }
+
+if (TypeOfUser==='entrepreneur' && isAuth){
+  return <Navigate to="/newProject" />
+}
+
 if (isAuth) {
   return <Navigate to="/" />
 }
+
+
   console.log(TypeOfUser)
- 
-const BootstrapButton = styled(Button)({
-  boxShadow: 'none',
-  textTransform: 'none',
-  fontSize: 16,
-  padding: '6px 12px',
-  border: '1px solid',
-  lineHeight: 1.5,
-  backgroundColor: '#0063cc',
-  borderColor: '#0063cc',
-  fontFamily: [
-    '-apple-system',
-    'BlinkMacSystemFont',
-    '"Segoe UI"',
-    'Roboto',
-    '"Helvetica Neue"',
-    'Arial',
-    'sans-serif',
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ].join(','),
-  '&:hover': {
-    backgroundColor: '#0069d9',
-    borderColor: '#0062cc',
-    boxShadow: 'none',
-  },
-  '&:active': {
-    boxShadow: 'none',
-    backgroundColor: '#0062cc',
-    borderColor: '#005cbf',
-  },
-  '&:focus': {
-    boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-  },
-});
+
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText('#a42eff'),
@@ -103,8 +93,12 @@ const ColorButton = styled(Button)(({ theme }) => ({
       <Typography classes={{ root: styles.title }} variant="h5">
         Создание аккаунта
       </Typography>
-      <div className={styles.avatar}>
-        <Avatar sx={{ width: 100, height: 100 }} />
+      <div className={styles.avatar}>   
+        <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
+        <Avatar alt={"Uploaded"} src={`http://localhost:5555${imageUrl}`} size="large"/>
+        <Button className={styles.avatarBut} onClick = {() => inputFileRef.current.click()} variant="outlined" size="large">
+          Загрузить аватар
+        </Button>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
@@ -112,7 +106,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
           helperText={errors.fullName?.message}
           {...register('fullName', {required: 'Укажите ваше имя и фамилию!'})}
           className={styles.field} 
-          label="Ваше имя и фамилия" 
+          label="Ваше имя и фамилия*" 
           fullWidth />
         <TextField 
           error={Boolean(errors.email?.message)}
@@ -120,7 +114,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
           type = "email"
           {...register('email', {required: 'Укажите почту!'})}
           className={styles.field} 
-          label="E-Mail" 
+          label="E-Mail*" 
           fullWidth />
         <TextField 
           error={Boolean(errors.password?.message)}
@@ -128,7 +122,14 @@ const ColorButton = styled(Button)(({ theme }) => ({
           type='password'
           {...register('password', {required: 'Укажите пароль!'})}
           className={styles.field} 
-          label="Пароль" 
+          label="Пароль*" 
+          fullWidth />
+        <TextField 
+          error={Boolean(errors.interests?.message)}
+          helperText={errors.interests?.message}
+          {...register('interests', {required: 'Расскажите о себе хотя бы чуть-чуть!(мин. 10 символов)'})}
+          className={styles.field} 
+          label="Расскажите о себе*" 
           fullWidth />
 
         <select 
@@ -137,10 +138,9 @@ const ColorButton = styled(Button)(({ theme }) => ({
           {...register("TypeOfUser")} 
           className={styles.select}
           onChange={handleChange} 
-          label={'Выбери свою роль'}
-          placeholder='Выберите свою роль'
+          label={'Выбери свою роль*'}
           fullWidth>
-          <option value="investor">Я инвестор, ищу новые проекты </option>
+          <option selected="selected" value="investor">Я инвестор, ищу новые проекты </option>
           <option value="entrepreneur">Я предприниматель, у меня есть свой проект</option>
           <option value="enthusiast">Я энтузиаст, ищу себе команду </option>
           <option value="idk">Я сторонний наблюдатель</option>
