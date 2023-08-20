@@ -27,7 +27,7 @@ export const Registration = () => {
     try {
       const formData = new FormData();
       const file = event.target.files[0];
-      formData.append('image', file);
+      formData.append('avatarUrl', file);
       const { data } = await axios.post('/upload', formData);
       setImageUrl(data.url);
       {register('avatarUrl')};
@@ -109,13 +109,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
           label="Ваше имя и фамилия*" 
           fullWidth />
         <TextField 
-          error={Boolean(errors.SurName?.message)}
-          helperText={errors.SurName?.message}
-          {...register('SurName', {required: 'Укажите фамилию'})}
-          className={styles.field} 
-          label="Фамилия" 
-          fullWidth />
-        <TextField 
           error={Boolean(errors.email?.message)}
           helperText={errors.email?.message}
           type = "email"
@@ -150,7 +143,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
           <option selected="selected" value="investor">Я инвестор, ищу новые проекты </option>
           <option value="entrepreneur">Я предприниматель, у меня есть свой проект</option>
           <option value="enthusiast">Я энтузиаст, ищу себе команду </option>
-          <option value="idk">Я сторонний наблюдатель</option>
+          <option value="idk">Пока не определился</option>
         </select>
 
         <ColorButton className={styles.signButton} disabled = {!isValid} type='submit' size="large" variant="contained" fullWidth>

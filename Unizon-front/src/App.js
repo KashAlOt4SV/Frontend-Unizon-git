@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 
 
 import { Header } from "./components";
-import { Home, FullPost, Registration, AddPost, Login, FiltHome, NewProject } from "./pages";
+import { Home, FullPost, Registration, AddPost, Login, FiltHome, NewProject, UserPage } from "./pages";
 import React  from "react";
 import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
 
@@ -30,6 +30,7 @@ function App() {
           <Route path='/posts/:id/edit' element = {<AddPost />}/>
           <Route path='/posts/:id/' element = {<FullPost />}/>
           <Route path='/add-post' element = {<AddPost />}/>
+          <Route path='/user-page' element = {<UserPage />}/>
           <Route path='/login' element = {<Login />}/>
           <Route path='/register' element = {<Registration />}/>
         </Routes>
