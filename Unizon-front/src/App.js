@@ -30,7 +30,7 @@ function App() {
           <Route path='/posts/:id/edit' element = {<AddPost />}/>
           <Route path='/posts/:id/' element = {<FullPost />}/>
           <Route path='/add-post' element = {<AddPost />}/>
-          <Route path='/user-page' element = {<UserPage />}/>
+          <Route path='/user-page/:id' element = {<UserPage />}/>
           <Route path='/login' element = {<Login />}/>
           <Route path='/register' element = {<Registration />}/>
         </Routes>

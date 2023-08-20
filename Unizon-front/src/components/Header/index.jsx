@@ -5,12 +5,13 @@ import Button from '@mui/material/Button';
 
 import styles from './Header.module.scss';
 import Container from '@mui/material/Container';
-import {selectIsAuth, logout  } from "../../redux/slices/auth";
+import {selectIsAuth, logout, UserID } from "../../redux/slices/auth";
 import { Navigate } from "react-router-dom";
 
 export const Header = () => {
   const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch();
+ const userData = useSelector(state => state.auth.data);
 
   const onClickLogout = () => {
     if (window.confirm('Вы уверены что хотите выйти?')){
@@ -32,7 +33,7 @@ export const Header = () => {
                 <Link to="/add-post"  className={styles.DoPost}>
                   <Button variant="contained">Написать статью</Button>
                 </Link>
-                <Link to="/user-page">
+                <Link to={`/user-page/${userData._id}`}>
                   <Button variant="contained">Мой профиль</Button>
                 </Link>
                 <Button onClick={onClickLogout} variant="contained" color="error">

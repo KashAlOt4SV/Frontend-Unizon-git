@@ -27,7 +27,7 @@ export const Registration = () => {
     try {
       const formData = new FormData();
       const file = event.target.files[0];
-      formData.append('avatarUrl', file);
+      formData.append('image', file);
       const { data } = await axios.post('/upload', formData);
       setImageUrl(data.url);
       {register('avatarUrl')};
