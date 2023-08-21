@@ -11,7 +11,7 @@ import { Navigate } from "react-router-dom";
 export const Header = () => {
   const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch();
- const userData = useSelector(state => state.auth.data);
+  const userData = useSelector(state => state.auth.data);
 
   const onClickLogout = () => {
     if (window.confirm('Вы уверены что хотите выйти?')){
@@ -36,9 +36,12 @@ export const Header = () => {
                 <Link to={`/user-page/${userData._id}`}>
                   <Button variant="contained">Мой профиль</Button>
                 </Link>
-                <Button onClick={onClickLogout} variant="contained" color="error">
-                  Выйти
-                </Button>
+                <Link to = "/">
+                  <Button onClick={onClickLogout} variant="contained" color="error">
+                    Выйти
+                  </Button>
+                </Link>
+                
               </>
             ) : (
               <>

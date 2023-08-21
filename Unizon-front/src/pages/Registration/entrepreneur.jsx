@@ -95,6 +95,9 @@ const ColorButton = styled(Button)(({ theme }) => ({
             Добавить свой проект
           </Link>
         </ColorButton>
+        <Link className={styles.signButtonLink} to="/">
+            <Button>Пропустить</Button>
+          </Link>
         
       </form>
     </Paper>

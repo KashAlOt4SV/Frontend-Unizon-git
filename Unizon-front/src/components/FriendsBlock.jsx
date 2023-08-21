@@ -13,7 +13,7 @@ export const FriendsBlock = ({ items, children, isLoading = true }) => {
   return (
     <div style={{ border: "1px solid #dedede", "border-radius": "6px", overflow: "hidden" }}>
         <SideBlock title="Друзья">
-      <List></List>
+      <List>
         {(isLoading ? [...Array(5)] : items).map((obj, index) => (
           <React.Fragment key={index}>
             <ListItem alignItems="flex-start">

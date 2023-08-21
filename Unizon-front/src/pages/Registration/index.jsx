@@ -21,22 +21,6 @@ export const Registration = () => {
   const isAuth = useSelector(selectIsAuth)
   const dispatch = useDispatch();
   const [TypeOfUser, setTypeOfUser] = React.useState('');
-  const [imageUrl, setImageUrl] = React.useState('');
-
-  const handleChangeFile = async(event) => {
-    try {
-      const formData = new FormData();
-      const file = event.target.files[0];
-      formData.append('image', file);
-      const { data } = await axios.post('/upload', formData);
-      setImageUrl(data.url);
-      {register('avatarUrl')};
-    } catch (err) {
-      console.warn(err);
-      alert('Ошибка при загрузке файла!')
-    }
-  };
-  const inputFileRef = React.useRef(null);
 
   const handleChange = (event) => {
     setTypeOfUser(event.target.value);
@@ -50,8 +34,7 @@ export const Registration = () => {
         email: '',
         password: '',
         TypeOfUser: '',
-        interests: '', 
-        avatarUrl:'',
+        interests: '',
       },
       mode: 'all',
   });
@@ -93,13 +76,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
       <Typography classes={{ root: styles.title }} variant="h5">
         Создание аккаунта
       </Typography>
-      <div className={styles.avatar}>   
-        <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
-        <Avatar alt={"Uploaded"} src={`http://localhost:5555${imageUrl}`} size="large"/>
-        <Button className={styles.avatarBut} onClick = {() => inputFileRef.current.click()} variant="outlined" size="large">
-          Загрузить аватар
-        </Button>
-      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           error={Boolean(errors.fullName?.message)}
@@ -140,7 +116,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
           onChange={handleChange} 
           label={'Выбери свою роль*'}
           fullWidth>
-          <option selected="selected" value="investor">Я инвестор, ищу новые проекты </option>
+          <option selected="selected" value="Инвестор">Я инвестор, ищу новые проекты </option>
           <option value="entrepreneur">Я предприниматель, у меня есть свой проект</option>
           <option value="enthusiast">Я энтузиаст, ищу себе команду </option>
           <option value="idk">Пока не определился</option>
