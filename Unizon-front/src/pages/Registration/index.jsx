@@ -116,7 +116,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
           onChange={handleChange} 
           label={'Выбери свою роль*'}
           fullWidth>
-          <option selected="selected" value="Инвестор">Я инвестор, ищу новые проекты </option>
+          <option selected="selected" value="investor">Я инвестор, ищу новые проекты </option>
           <option value="entrepreneur">Я предприниматель, у меня есть свой проект</option>
           <option value="enthusiast">Я энтузиаст, ищу себе команду </option>
           <option value="idk">Пока не определился</option>

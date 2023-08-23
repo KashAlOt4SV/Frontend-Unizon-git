@@ -1,0 +1,93 @@
+.root {
+    background-color: #fff;
+    border: 1px solid #dedede;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 1200px;
+    margin-bottom: 15px;
+}
+
+.titleOfPage {
+    font-size: 45px;
+    color: #383838;
+    margin-bottom: 30px;
+}
+
+.passwordEdit {
+    background-color: #fff;
+    border: 1px solid #dedede;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 390px;
+    margin-bottom: 15px;
+    margin-top: 95px;
+}
+
+.password {
+    font-size: 22px;
+    color: #383838;
+    margin-bottom: 25px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.oldPasswor {
+    margin-bottom: 40px !important;
+    width: 300px !important;
+    height: 40px !important;
+    margin-left: 30px !important;
+}
+
+.submit {
+    width: 150px !important;
+    margin-left: 105px !important;
+}
+
+.avatar {
+    margin-top: 40px;
+    margin-left: 40px;
+}
+
+.uploadButton {
+    margin-left: 35px;
+    margin-bottom: 200px;
+}
+
+.delete {
+    margin-left: 35px;
+    margin-bottom: 200px;
+}
+
+.fieldButton {
+    width: 400px;
+    margin-left: 40px;
+}
+
+.field {
+    font-size: 17px;
+    color: #383838;
+    margin-bottom: 7px;
+    margin-left: 40px;
+}
+
+.line {
+    width: 560px;
+    padding-bottom: 40px;
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+
+.select {
+    text-align: center !important;
+    margin-bottom: 20px !important;
+    display: flex;
+    padding: 15px !important;
+    width: 400px;
+    color: #383838;
+    font-family: "Gill Sans", sans-serif;
+    font-size: 15px !important;
+    border: 1px solid #dedede;
+    margin-left: 40px;
+}
+

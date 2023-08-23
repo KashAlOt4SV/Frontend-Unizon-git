@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useParams} from "react-router-dom";
-import { useDispatch, useSelector  } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
 import { purple, grey } from '@mui/material/colors';
@@ -128,8 +128,8 @@ export const Post = ({
                 <div className={styles.Like}>
                 <IconButton sx={{ color: color }} fontSize="large"  onClick={onClickDoLike}>
                   <FavoriteIcon />
-                  <span>{CountLikes}</span>
                 </IconButton>
+                <span>{CountLikes}</span>
                 </div>
                 <li>
                   <CommentIcon fontSize="large"  />

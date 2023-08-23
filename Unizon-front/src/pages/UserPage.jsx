@@ -8,6 +8,7 @@ import { Post } from '../components/Post';
 import { fetchFilterUserPosts } from '../redux/slices/posts';
 import { FriendsBlock } from '../components/FriendsBlock';
 import axios from '../axios'
+import {useParams} from "react-router-dom";
 
 
 
@@ -17,6 +18,7 @@ export const UserPage = () => {
     const {posts} = useSelector(state => state.posts);
     const isPostsLoading = posts.status == 'loading';
     const dispatch = useDispatch();
+    const { id } = useParams();
 
 
     const [imageUrl, setImageUrl] = React.useState('');
@@ -34,11 +36,11 @@ export const UserPage = () => {
   };
 
     React.useEffect(() => {
-        dispatch(fetchFilterUserPosts(userData._id));
+        dispatch(fetchFilterUserPosts(id));
     }, []);
 
     if (!isAuth) {
-        return <Navigate to="/" />
+        return <Navigate to={`/user-page/${id}`} />
 }
 
     console.log(isAuth, userData);

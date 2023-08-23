@@ -25,21 +25,13 @@
     position:absolute;
 }
 
-/*.typeOfUser {
-    font-size: 19px;
-    margin-top: 145px;
-    margin-left: 15px;
-    position: absolute;
-    color: #a42eff;
-}*/
-
 .aboutMe {
     margin-left: 185px;
 }
 
 .typeOfUser {
     font-size: 22px;
-    margin-top: 250px;
+    margin-top: 200px;
     margin-left: 1025px;
     position: absolute;
     color: #a42eff;
@@ -59,4 +51,9 @@
     margin-top: 185px;
     width: 100px;
     height: 50px;
+}
+
+.editButton {
+    margin-left: 1100px;
+    margin-top: 5px;
 }

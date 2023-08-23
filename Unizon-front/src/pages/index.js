@@ -6,3 +6,4 @@ export { NewProject } from "./Registration/entrepreneur"
 export { Login } from "./Login";
 export { FiltHome } from "./FiltHome";
 export { UserPage } from "./UserPage";
+export { EditProfile } from "./EditProfile";

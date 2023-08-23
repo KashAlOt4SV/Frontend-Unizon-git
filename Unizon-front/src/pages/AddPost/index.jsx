@@ -111,7 +111,7 @@ export const AddPost = () => {
       <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
         <>
-          <Button variant="contained" color="error" onClick={onClickRemoveImage}>
+          <Button variant="contained" color="error" onClick={onClickRemoveImage} className={styles.delete}>
             Удалить
           </Button>
           <img className={styles.image} src={`http://localhost:5555${imageUrl}`} alt="Uploaded" />
