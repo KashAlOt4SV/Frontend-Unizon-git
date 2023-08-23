@@ -23,7 +23,6 @@ function App() {
       <Container maxWidth="lg">
         <Routes>
           <Route path='/' element = {<Home />}/>
-          <Route path='/tags/:name' element = {<FiltHome />}/>
           <Route path='/tag/:name' element = {<FiltHome />}/>
           <Route path='/newProject' element = {<NewProject />}/>
           <Route path='/posts/:id' element = {<FullPost />}/>

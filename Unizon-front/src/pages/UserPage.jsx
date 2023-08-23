@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { fetchFilterUserPosts } from '../redux/slices/posts';
 import { FriendsBlock } from '../components/FriendsBlock';
+import axios from '../axios'
 
 
 
@@ -16,6 +17,21 @@ export const UserPage = () => {
     const {posts} = useSelector(state => state.posts);
     const isPostsLoading = posts.status == 'loading';
     const dispatch = useDispatch();
+
+
+    const [imageUrl, setImageUrl] = React.useState('');
+    const handleChangeFile = async(event) => {
+    try {
+      const formData = new FormData();
+      const file = event.target.files[0];
+      formData.append('image', file);
+      const { data } = await axios.post('/upload', formData);
+      setImageUrl(data.url);
+    } catch (err) {
+      console.warn(err);
+      alert('Ошибка при загрузке файла!')
+    }
+  };
 
     React.useEffect(() => {
         dispatch(fetchFilterUserPosts(userData._id));
@@ -62,7 +78,7 @@ export const UserPage = () => {
                 items={[
                   {
                     user: {
-                      fullName: 'Аня Датцюк',
+                      fullName: 'Аня Дацюк',
                       avatarUrl: 'https://sun1-47.userapi.com/impg/viwowJUBwlXCzyADq2jDduNmtJ4BeqWubBho_w/LiMLJdXWZLw.jpg?size=1440x1440&quality=95&sign=0cce24a304d34739ccd2243114a25b1c&type=album',
                     },
                     text: 'Инвестор',

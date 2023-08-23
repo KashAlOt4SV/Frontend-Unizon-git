@@ -50,7 +50,7 @@ export const fetchUserLike = createAsyncThunk('posts/fetchUserLike', async () =>
 });
 
 export const fetchCountLikes = createAsyncThunk('posts/fetchCountLikes', async (id) => {
-    const {data} = await axios.get(`/like/:id`);
+    const {data} = await axios.get(`/like/${id}`);
     return data;
 });
 
