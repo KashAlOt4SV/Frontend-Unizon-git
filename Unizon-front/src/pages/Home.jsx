@@ -1,7 +1,6 @@
 import React from 'react';
 import Tabs from '@mui/material/Tabs';
-import { useDispatch, useSelector, useState } from 'react-redux';
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector} from 'react-redux';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 
@@ -60,7 +59,6 @@ export const Home = () => {
               commentsCount={3}
               tags={obj.tags}
               isEditable = {userData?._id == obj.user._id}
-              likesCount = {obj.likesCount}
             />
           )
         )}

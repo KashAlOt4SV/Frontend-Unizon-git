@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link, useParams, useNavigate, Navigate } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 import { useDispatch, useSelector  } from 'react-redux';
 import clsx from 'clsx';
+
+import { purple, grey } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,12 +12,11 @@ import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 import axios from '../../axios';
-import { UserID, selectIsAuth } from "../../redux/slices/auth";
 
 import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
-import { fetchRemovePosts, fetchDoLike, fetchCountLikes, fetchIsLike} from '../../redux/slices/posts';
+import { fetchRemovePosts, fetchDoLike, fetchFilterPosts, fetchTags} from '../../redux/slices/posts';
 
 export const Post = ({
   id,
@@ -30,15 +31,13 @@ export const Post = ({
   isFullPost,
   isLoading,
   isEditable,
-  likesCount,
 }) => {
 
-  const [UserLikes, setUserLikes] = React.useState();
+  const [CountLikes, setCountLikes] = React.useState();
+  const [IsLike, setIsLike] = React.useState();
   const dispatch = useDispatch();
-  
-  const isAuth = useSelector(UserID);
-  const userData = useSelector(state => state.auth.data);
-  
+  const params = useParams();  
+  const name = params.name
   
   React.useEffect(() => {
   if (id===undefined) {
@@ -46,15 +45,18 @@ export const Post = ({
   }
   else{
     axios
-    .get(`/UserLikes/${id}`)
+    .get(`/like/${id}`)
     .then((res) => {
-      setUserLikes(res.data);
+      setCountLikes(res.data);
+    })
+    axios
+    .get(`/IsLike/${id}`)
+    .then((res) => {
+      setIsLike(res.data.IsLike);
     })
   }
   
 }, []);
-  
-  const ArrOfLikes = UserLikes ?? [];
   if (isLoading) {
     return <PostSkeleton />;
   }
@@ -65,24 +67,27 @@ export const Post = ({
     }
   };
 
-  const onClickDoLike = () => {
-    dispatch(fetchDoLike(id));
-    
-  };
-  
-  
+  const onClickTag = () => {
+    dispatch(fetchFilterPosts(name));
+    dispatch(fetchTags());
+};
 
-  function DoLikesArray(LikesArray){
-    if (LikesArray !== []){
-      for (var i = 0; i < LikesArray.length; i++) {
-      if (LikesArray[i] == userData._id){
-        return true;
-      }
-    }
-    return false;
-    }
+
+  const onClickDoLike = () => {
+    dispatch(fetchDoLike(id))
+    .then((res) => {
+      setCountLikes(res.payload.countLikes)
+      setIsLike(res.payload.isLike)
+    })
+    ;
+  };
+
+  var color = grey[500]
+  if (IsLike) {
+    color = purple[500]
   }
-  const IsLike = DoLikesArray(ArrOfLikes);
+  
+  
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       {isEditable && (
@@ -113,7 +118,7 @@ export const Post = ({
           <ul className={styles.tags}>
             {tags.map((name) => (
               <li key={name}>
-                <Link to={`/tag/${name}`}>#{name}</Link>
+                <Link onClick={onClickTag} to={`/tag/${name}`}>#{name}</Link>
               </li>
             ))}
           </ul>
@@ -121,17 +126,17 @@ export const Post = ({
             <div>
               <ul className={styles.postDetails}>
                 <div className={styles.Like}>
-                <IconButton  className={clsx(styles.LikeButtonEmpty, { [styles.LikeButtonFull]: IsLike })} onClick={onClickDoLike}>
+                <IconButton sx={{ color: color }} fontSize="large"  onClick={onClickDoLike}>
                   <FavoriteIcon />
-                  <span>{likesCount}</span>
+                  <span>{CountLikes}</span>
                 </IconButton>
                 </div>
                 <li>
-                  <CommentIcon />
+                  <CommentIcon fontSize="large"  />
                   <span>{commentsCount}</span>
                 </li>
                 <li>
-                    <EyeIcon />
+                    <EyeIcon fontSize="large"  />
                   <span>{viewsCount}</span>
                 </li>
               </ul>

@@ -21,7 +21,7 @@ export const FiltHome = () => {
   const isPostsLoading = posts.status == 'loading';
   const isTagsLoading = tags.status == 'loading';
   React.useEffect(() => {
-    dispatch(fetchFilterPosts(params.name));
+    dispatch(fetchFilterPosts(name));
     dispatch(fetchTags());
   }, []);
 
