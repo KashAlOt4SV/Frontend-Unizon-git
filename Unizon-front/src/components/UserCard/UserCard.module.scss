@@ -3,9 +3,7 @@
     border: 1px solid #dedede;
     border-radius: 15px;
     overflow: hidden;
-    position: relative;
     height: 300px;
-    display: flex;
     margin-bottom: 15px;
 }
 
@@ -16,13 +14,14 @@
     margin-right: 10px;
     margin-left: 25px;
     margin-top: 25px;
+    position: absolute;
 }
 
 .userName {
     font-weight: 500;
     font-size: 28px;
     margin-top: 85px;
-    margin-left: 15px;
+    margin-left: 185px;
     position:absolute;
 }
 
@@ -35,20 +34,29 @@
 }*/
 
 .aboutMe {
-    margin-left: 15px;
-    margin-top: 130px;
+    margin-left: 185px;
 }
 
 .typeOfUser {
     font-size: 22px;
     margin-top: 250px;
-    margin-left: 850px;
+    margin-left: 1025px;
     position: absolute;
     color: #a42eff;
 }
 
 .interests {
-    margin-left: 15px;
+    margin-left: 185px;
+}
+
+.userInfo {
     position: absolute;
-    margin-bottom: 50px;
+    margin-top: 110px;
+}
+
+.editAvatar {
+    margin-left: 50px;
+    margin-top: 185px;
+    width: 100px;
+    height: 50px;
 }
