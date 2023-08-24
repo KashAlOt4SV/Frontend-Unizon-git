@@ -7,3 +7,4 @@ export * from "./UserInfo";
 export * from "./Header";
 export * from "./UserCard";
 export * from "./FriendsBlock";
+export * from "./SideBar";

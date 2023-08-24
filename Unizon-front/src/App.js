@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Container from "@mui/material/Container";
 
 
-import { Header } from "./components";
-import { Home, FullPost, Registration, AddPost, Login, FiltHome, NewProject, UserPage, EditProfile } from "./pages";
+import { SideBar } from "./components";
+import { Home, FullPost, Registration, AddPost, Login, FiltHome, NewProject, UserPage, EditProfile, Friends, Messages, MyProject, Projects, Vacancy } from "./pages";
 import React  from "react";
 import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
 
@@ -19,7 +19,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <SideBar/>
       <Container maxWidth="lg">
         <Routes>
           <Route path='/' element = {<Home />}/>
@@ -33,6 +33,11 @@ function App() {
           <Route path='/edit-profile/:id' element = {<EditProfile />}/>
           <Route path='/login' element = {<Login />}/>
           <Route path='/register' element = {<Registration />}/>
+          <Route path='/friens' element = {<Friends />}/>
+          <Route path='/messages' element = {<Messages />}/>
+          <Route path='/myProject' element = {<MyProject />}/>
+          <Route path='/projects' element = {<Projects />}/>
+          <Route path='/vacancy' element = {<Vacancy />}/>
         </Routes>
       </Container>
     </>

@@ -18,24 +18,6 @@ export const UserCard = ({
     const userData = useSelector(state => state.auth.data);
     const itemsOfUser = {avatarUrl: userData.avatarUrl,fullName:{fullName}, email: userData.email, interests: userData.interests, typeOfUser: userData.typeOfUser}
     console.log()
-
-    /*const inputFileRef = React.useRef(null);
-    const [imageUrl, setImageUrl] = React.useState('');
-
-    const handleChangeFile = async(event) => {
-    try {
-      const formData = new FormData();
-      const file = event.target.files[0];
-      formData.append('image', file);
-      const { data } = await axios.post('/upload', formData);
-      const { avatarUrl } = await axios.patch('/updateAvatar', avatarUrl);
-      setImageUrl(data.url);
-    } catch (err) {
-      console.warn(err);
-      alert('Ошибка при загрузке файла!')
-    }
-  };*/
-
     
 
     return (

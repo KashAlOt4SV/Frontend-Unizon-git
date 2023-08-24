@@ -1,0 +1,38 @@
+.root {
+    padding: 10px 0;
+}
+
+.inner {
+}
+
+.logo {
+    color: #fff;
+    font-weight: 700;
+    line-height: 35px;
+    text-transform: uppercase;
+    letter-spacing: 0.15px;
+    border-radius: 5px;
+    padding: 0 10px;
+    text-decoration: none;
+    transition: width 2s ease;
+
+    &:hover {
+        background-color: #a42eff;
+        transition: width .5s ease;
+    }
+}
+
+.buttons {
+    margin-left: 920px !important;
+    button {
+        margin-left: 10px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.DoPost {
+    margin-left: 10px;
+}

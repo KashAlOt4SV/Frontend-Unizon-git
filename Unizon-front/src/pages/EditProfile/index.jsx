@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, Navigate, useNavigate } from 'react-router-dom'
+import { useLocation, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import {useForm} from "react-hook-form";
 
@@ -14,17 +14,26 @@ export const EditProfile = ({
 }) => {
     const location = useLocation()
 
-    const  avatarUrl  = location.state.itemsOfUser.avatarUrl
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [typeOfUser, setTypeOfUser] = React.useState(location.state.itemsOfUser.typeOfUser);
+    const [TypeOfUser, setTypeOfUser] = React.useState(location.state.itemsOfUser.typeOfUser);
     const [email, setEmail] = React.useState(location.state.itemsOfUser.email);
     const [fullName, setFullName] = React.useState(location.state.itemsOfUser.fullName.fullName);
     const [interests, setInterests] = React.useState(location.state.itemsOfUser.interests);
 
     const inputFileRef = React.useRef(null);
-    const [imageUrl, setImageUrl] = React.useState('');
+
+    const [avatarUrl, setAvatarUrl] = React.useState(location.state.itemsOfUser.avatarUrl);
+
+    console.log(avatarUrl);
+
+    const isAvatarUrl = (avatarUrl != '')
+
+    const {id} = useParams();
+
+    const isEditing = Boolean(id);
+
 
     const handleChangeFile = async(event) => {
     try {
@@ -32,16 +41,38 @@ export const EditProfile = ({
       const file = event.target.files[0];
       formData.append('image', file);
       const { data } = await axios.post('/upload', formData);
-      const { avatarUrl } = await axios.patch('/updateAvatar', avatarUrl);
-      setImageUrl(data.url);
+      setAvatarUrl(data.url);
     } catch (err) {
       console.warn(err);
       alert('Ошибка при загрузке файла!')
     }
     };
 
+      const onSubmitProfile = async() => {
+        try {
+        const fields = {
+            TypeOfUser,
+            email,
+            fullName,
+            interests,
+            avatarUrl
+        };
+
+
+        const {data} = await axios.patch(`/update/${id}`, fields)
+
+         const _id = isEditing ? id : data._id;
+
+        navigate(`/user-page/${_id}`);
+
+        } catch (err) {
+        console.warn(err);
+        alert('Ошибка при редактировании профиля!');
+        }
+    }
+
     const onClickRemoveImage = () => {
-    setImageUrl('');
+    setAvatarUrl('');
   };
 
     const { register, 
@@ -81,22 +112,26 @@ export const EditProfile = ({
                     <div className={styles.root}>
                         <div>
                             <img className={styles.avatar} src={avatarUrl ? `http://localhost:5555${avatarUrl}` : '/noavatar.png'} alt={fullName}/>
-                            <Button onClick = {() => inputFileRef.current.click()} variant="outlined" size="large" className={styles.uploadButton}>
-                                Загрузить аватар
-                            </Button>
-                            <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
-                            {imageUrl && (
+                            <div>
+                                {!isAvatarUrl ? (
                                 <>
                                 <Button onClick = {() => inputFileRef.current.click()} variant="outlined" size="large" className={styles.uploadButton}>
+                                    Загрузить аватар
+                                </Button>
+                                <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
+                                </>
+                            ) : (
+                                <>
+                                <Button onClick = {() => inputFileRef.current.click()} variant="outlined" size="large" className={styles.editButton}>
                                     Изменить аватар
                                 </Button>
                                 <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
                                 <Button variant="contained" color="error" onClick={onClickRemoveImage} className={styles.delete}>
                                     Удалить мать
                                 </Button>
-                                <img className={styles.image} src={`http://localhost:5555${imageUrl}`} alt="Uploaded" />
                                 </>
                             )}
+                            </div>
                         </div>
                         <div className={styles.line}>
                             <hr/>
@@ -110,6 +145,7 @@ export const EditProfile = ({
                                 className={styles.fieldButton} 
                                 label="Ваше имя и фамилия" 
                                 defaultValue={fullName}
+                                onChange={e => setFullName(e.target.value)}
                                 fullWidth />
                             </div>
                             <div className={styles.line}>
@@ -125,6 +161,7 @@ export const EditProfile = ({
                                 className={styles.fieldButton}
                                 label="E-Mail"
                                 defaultValue={email}
+                                onChange={e => setEmail(e.target.value)}
                                 fullWidth />
                             </div>
                         </div>
@@ -140,6 +177,7 @@ export const EditProfile = ({
                                 className={styles.fieldButton} 
                                 label="Расскажите о себе" 
                                 defaultValue={interests}
+                                onChange={e => setInterests(e.target.value)}
                                 fullWidth />
                             </div>
                         </div>
@@ -155,7 +193,7 @@ export const EditProfile = ({
                                     className={styles.select}
                                     onChange={handleChange} 
                                     label={'Выбери свою роль*'}
-                                    defaultValue={typeOfUser}
+                                    defaultValue={TypeOfUser}
                                     fullWidth>
                                     <option selected="selected" value="investor">Я Инвестор, ищу новые проекты </option>
                                     <option value="entrepreneur">Я предприниматель, у меня есть свой проект</option>
@@ -168,7 +206,7 @@ export const EditProfile = ({
                             <hr/>
                         </div>
                         <div className={styles.submitMain}>
-                            <Button type='submit' size="large" variant="contained" fullWidth className={styles.submit}>
+                            <Button type='submit' size="large" variant="contained" fullWidth className={styles.submit} onClick={onSubmitProfile}>
                                 Сохранить
                             </Button>
                         </div>

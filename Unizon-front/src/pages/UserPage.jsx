@@ -41,9 +41,8 @@ export const UserPage = () => {
 
     if (!isAuth) {
         return <Navigate to={`/user-page/${id}`} />
-}
+    }
 
-    console.log(isAuth, userData);
 
     
     return (
