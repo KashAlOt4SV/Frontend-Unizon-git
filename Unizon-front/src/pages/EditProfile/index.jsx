@@ -1,16 +1,28 @@
 import React from 'react';
+import { useLocation, Navigate, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import {useForm} from "react-hook-form";
+
 import styles from './EditProfile.module.scss';
 import Grid from '@mui/material/Grid';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from '../../axios'
+import { fetchSwitchPassword } from "../../redux/slices/auth";
 
 export const EditProfile = ({
-    avatarUrl,
-    fullName,
 }) => {
+    const location = useLocation()
 
-    const [TypeOfUser, setTypeOfUser] = React.useState('');
+    const  avatarUrl  = location.state.itemsOfUser.avatarUrl
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [typeOfUser, setTypeOfUser] = React.useState(location.state.itemsOfUser.typeOfUser);
+    const [email, setEmail] = React.useState(location.state.itemsOfUser.email);
+    const [fullName, setFullName] = React.useState(location.state.itemsOfUser.fullName.fullName);
+    const [interests, setInterests] = React.useState(location.state.itemsOfUser.interests);
+
     const inputFileRef = React.useRef(null);
     const [imageUrl, setImageUrl] = React.useState('');
 
@@ -32,6 +44,29 @@ export const EditProfile = ({
     setImageUrl('');
   };
 
+    const { register, 
+    handleSubmit,
+    formState: {errors, isValid},
+  } = useForm( {
+      defaultValues: {
+        oldPassword: '',
+        newPassword: '',
+        newPasswordVal: '',
+      },
+      mode: 'all',
+  });
+
+    const onSubmit = async (values) => {
+        const data = await dispatch(fetchSwitchPassword(values));
+
+        if (!data.payload) {
+            return alert('Не удалось сменить пароль');
+        }
+
+        else  {
+            return alert("Пароль изменен!")
+        }
+}
   const handleChange = (event) => {
     setTypeOfUser(event.target.value);
   };
@@ -74,6 +109,7 @@ export const EditProfile = ({
                                 <TextField
                                 className={styles.fieldButton} 
                                 label="Ваше имя и фамилия" 
+                                defaultValue={fullName}
                                 fullWidth />
                             </div>
                             <div className={styles.line}>
@@ -82,12 +118,13 @@ export const EditProfile = ({
                         </div>
                         <div>
                             <div className={styles.field}>
-                                e-mail
+                                E-mail
                             </div>
                             <div>
                                 <TextField
                                 className={styles.fieldButton}
-                                label="E-Mail" 
+                                label="E-Mail"
+                                defaultValue={email}
                                 fullWidth />
                             </div>
                         </div>
@@ -102,6 +139,7 @@ export const EditProfile = ({
                                 <TextField
                                 className={styles.fieldButton} 
                                 label="Расскажите о себе" 
+                                defaultValue={interests}
                                 fullWidth />
                             </div>
                         </div>
@@ -117,6 +155,7 @@ export const EditProfile = ({
                                     className={styles.select}
                                     onChange={handleChange} 
                                     label={'Выбери свою роль*'}
+                                    defaultValue={typeOfUser}
                                     fullWidth>
                                     <option selected="selected" value="investor">Я Инвестор, ищу новые проекты </option>
                                     <option value="entrepreneur">Я предприниматель, у меня есть свой проект</option>
@@ -128,6 +167,11 @@ export const EditProfile = ({
                         <div className={styles.line}>
                             <hr/>
                         </div>
+                        <div className={styles.submitMain}>
+                            <Button type='submit' size="large" variant="contained" fullWidth className={styles.submit}>
+                                Сохранить
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </Grid>
@@ -136,21 +180,29 @@ export const EditProfile = ({
                     <div className={styles.password}>
                         Изменить пароль
                     </div>
-                    <TextField className={styles.oldPasswor} 
-                    label="Старый пороль"
-                    
-                    fullWidth />
-                    <TextField className={styles.oldPasswor} 
-                    label="Новый пароль"
-                    
-                    fullWidth />
-                    <TextField className={styles.oldPasswor} 
-                    label="Подтвердите новый пароль"
-                    
-                    fullWidth />
-                    <Button type='submit' size="large" variant="contained" fullWidth className={styles.submit}>
-                        Сохранить
-                    </Button>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <TextField className={styles.oldPasswor} 
+                        label="Старый пароль"
+                        error={Boolean(errors.oldPassword?.message)}
+                        helperText={errors.oldPassword?.message}
+                        {...register('oldPassword', {required: 'Укажите ваш старый пароль!'})}
+                        fullWidth />
+                        <TextField className={styles.oldPasswor} 
+                        label="Новый пароль"
+                        error={Boolean(errors.newPassword?.message)}
+                        helperText={errors.newPassword?.message}
+                        {...register('newPassword', {required: 'Укажите ваш новый пароль!'})}
+                        fullWidth />
+                        <TextField className={styles.oldPasswor} 
+                        label="Подтвердите новый пароль"
+                        error={Boolean(errors.newPasswordVal?.message)}
+                        helperText={errors.newPasswordVal?.message}
+                        {...register('newPasswordVal', {required: 'Подтвердите ваш новый пароль!'})}
+                        fullWidth />
+                        <Button disabled={!isValid} type='submit' size="large" variant="contained"  fullWidth className={styles.submit}>
+                            Сохранить
+                        </Button>
+                    </form>
                 </div>
             </Grid>
         </Grid>

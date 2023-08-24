@@ -16,6 +16,11 @@ export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async (params) =
     return data;
 });
 
+export const fetchSwitchPassword = createAsyncThunk('auth/fetchSwitchPassword', async (params) => {
+    const { data } = await axios.patch('/update-password', params);
+    return data;
+});
+
 const initialState = {
     data: null,
     status: 'loading',
@@ -63,6 +68,18 @@ const authSlice = createSlice({
             state.data = action.payload; 
         },
         [fetchRegister.rejected]: (state) => {
+            state.status = 'error';
+            state.data = null;
+        },
+        [fetchSwitchPassword.pending]: (state) => {
+            state.status = 'loading';
+            state.data = null;
+        },
+        [fetchSwitchPassword.fulfilled]: (state, action) => {
+            state.status = 'loaded';
+            state.data = action.payload; 
+        },
+        [fetchSwitchPassword.rejected]: (state) => {
             state.status = 'error';
             state.data = null;
         }

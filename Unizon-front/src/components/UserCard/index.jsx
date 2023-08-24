@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './UserCard.module.scss';
 import Button from '@mui/material/Button';
 import axios from '../../axios'
@@ -14,6 +15,9 @@ export const UserCard = ({
 }) => {
 
     const {id} = useParams();
+    const userData = useSelector(state => state.auth.data);
+    const itemsOfUser = {avatarUrl: userData.avatarUrl,fullName:{fullName}, email: userData.email, interests: userData.interests, typeOfUser: userData.typeOfUser}
+    console.log()
 
     /*const inputFileRef = React.useRef(null);
     const [imageUrl, setImageUrl] = React.useState('');
@@ -45,7 +49,7 @@ export const UserCard = ({
                 <span className={styles.interests}>{interests}</span>
             </div>
             <div className={styles.editButton}>
-                <Link to={`/edit-profile/${id}`} >
+                <Link to={`/edit-profile/${id}`} state={{itemsOfUser}}>
                     <IconButton color="primary">
                         <EditIcon />
                     </IconButton>
