@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -32,6 +33,7 @@ import styles from './Enterpreneur.module.scss';
 const steps = ['Основная информация', 'Инвестиции', 'Вашей команде не нужны пополнения?'];
 
 export const NewProject =() => {
+  const navigate = useNavigate()
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const [projectName, setProjectName] = React.useState("");
@@ -85,12 +87,12 @@ export const NewProject =() => {
 
         const {data} = await axios.post(`/newProject`, fields)
         
-        data ? alert("Вакансия создан") : alert("Проект не создан")
-
+        data ? alert("Проект создан") : alert("Проект не создан")
+        navigate(`/myProject`);
 
         } catch (err) {
         console.warn(err);
-        alert('Ошибка при редактировании профиля!');
+        alert('Ошибка при создании проекта!');
         }
     }
 
@@ -106,19 +108,15 @@ export const NewProject =() => {
 
   const handleEditClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-    setInvestors(rowModesModel);
   };
 
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-    setInvestors(rowModesModel);
   };
 
   const handleDeleteClick = (id) => () => {
     setRows(rows.filter((row) => row.id !== id));
-    setInvestors(rowModesModel);
   };
-  console.log(investors)
   const handleCancelClick = (id) => () => {
     setRowModesModel({
       ...rowModesModel,
@@ -139,6 +137,7 @@ export const NewProject =() => {
 
   const handleRowModesModelChange = (newRowModesModel) => {
     setRowModesModel(newRowModesModel);
+    setInvestors(JSON.stringify(rows, null, 2))
   };
 
   const columns = [
@@ -247,6 +246,7 @@ export const NewProject =() => {
     setActiveStep(0);
   };
 
+  
   return (
     <Box sx={{ width: '100%' }}>
       <Stepper activeStep={activeStep}>
