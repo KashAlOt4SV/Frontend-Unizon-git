@@ -38,6 +38,7 @@ export const NewProject =() => {
   const [skipped, setSkipped] = React.useState(new Set());
   const [projectName, setProjectName] = React.useState("");
   const [aboutProject, setAboutProject] = React.useState("");
+  const [avatarUrl, setAvatarUrl] = React.useState("");
   const [countCommand, setCountCommand] = React.useState("");
   const [command, setCommand] = React.useState("");
   const [investment, setInvestment] = React.useState("");
@@ -45,10 +46,30 @@ export const NewProject =() => {
   const [vacances, setVacances] = React.useState("");
   const [investors, setInvestors] = React.useState({});
 
+  const isAvatarUrl = (avatarUrl != '')
+
   const changeCountCommand = (event) => {
     setCountCommand(event.target.value);
   };
 
+  const inputFileRef = React.useRef(null);
+
+  const handleChangeFile = async(event) => {
+    try {
+      const formData = new FormData();
+      const file = event.target.files[0];
+      formData.append('image', file);
+      const { data } = await axios.post('/upload', formData);
+      setAvatarUrl(data.url);
+    } catch (err) {
+      console.warn(err);
+      alert('Ошибка при загрузке файла!')
+    }
+    };
+
+  const onClickRemoveImage = () => {
+    setAvatarUrl('');
+  };
 
   function EditToolbar(props) {
     const { setRows, setRowModesModel } = props;
@@ -82,6 +103,7 @@ export const NewProject =() => {
             sizeOfInvestment,
             vacances,
             investors,
+            avatarUrl
         };
 
 
@@ -284,6 +306,32 @@ export const NewProject =() => {
             {activeStep === 0 ? 
             (<div>
               <div>
+                  <div>
+                    <div className={styles.field}>
+                      Фото проекта
+                    </div>
+                    <img className={styles.avatar} src={avatarUrl ? `http://localhost:5555${avatarUrl}` : '/noavatar.png'} alt={'Не удалось найти фото'}/>
+                    <div>
+                        {!isAvatarUrl ? (
+                        <>
+                        <Button onClick = {() => inputFileRef.current.click()} variant="outlined" size="large" className={styles.uploadButton}>
+                            Загрузить фото
+                        </Button>
+                        <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
+                        </>
+                    ) : (
+                        <>
+                        <Button onClick = {() => inputFileRef.current.click()} variant="outlined" size="large" className={styles.editButton}>
+                            Изменить фото
+                        </Button>
+                        <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
+                        <Button variant="contained" color="error" onClick={onClickRemoveImage} className={styles.delete}>
+                            Удалить фото
+                        </Button>
+                        </>
+                    )}
+                    </div>
+                </div>
                   <div className={styles.field}>
                       Название проекта
                   </div>
