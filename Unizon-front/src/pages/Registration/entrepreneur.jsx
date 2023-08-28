@@ -40,6 +40,7 @@ export const NewProject =() => {
   const [aboutProject, setAboutProject] = React.useState("");
   const [avatarUrl, setAvatarUrl] = React.useState("");
   const [countCommand, setCountCommand] = React.useState("");
+  const [deadline, setDeadline] = React.useState("");
   const [command, setCommand] = React.useState("");
   const [investment, setInvestment] = React.useState("");
   const [sizeOfInvestment, setSizeOfInvestment] = React.useState("");
@@ -70,6 +71,11 @@ export const NewProject =() => {
   const onClickRemoveImage = () => {
     setAvatarUrl('');
   };
+  
+  const changeDeadline = (event) => {
+    setDeadline(event.target.value);
+  };
+
 
   function EditToolbar(props) {
     const { setRows, setRowModesModel } = props;
@@ -103,7 +109,8 @@ export const NewProject =() => {
             sizeOfInvestment,
             vacances,
             investors,
-            avatarUrl
+            avatarUrl,
+            deadline
         };
 
 
@@ -229,7 +236,7 @@ export const NewProject =() => {
   ];
 
   const isStepOptional = (step) => {
-    return (step === 1 || step === 2) ;
+    return (step === 1) ;
   };
 
   const isStepSkipped = (step) => {
@@ -482,6 +489,30 @@ export const NewProject =() => {
                       defaultValue={command}
                       onChange={e => setCommand(e.target.value)}
                       fullWidth />
+                  </div>
+                  <div className={styles.line}>
+                      <hr/>
+                  </div>
+              </div>
+              <div>
+                  <div className={styles.field}>
+                      Сроки реализации проекта
+                  </div>
+                  <div>
+                    <FormControl fullWidth>
+                      <Select
+                      className={styles.fieldButton} 
+                      value={deadline}
+                      select
+                      onChange={changeDeadline}
+                      fullWidth >
+                        <MenuItem value={"Менее 1 года"}>Менее 1 года</MenuItem>
+                        <MenuItem value={"Более 1 года"}>Более 1 года</MenuItem>
+                        <MenuItem value={"Более 2 лет"}>Более 2 лет</MenuItem>
+                        <MenuItem value={"Более 3 лет"}>Более 3 лет</MenuItem>
+                        <MenuItem value={"Более 5 лет"}>Более 5 лет</MenuItem>
+                      </Select>
+                    </FormControl>
                   </div>
                   <div className={styles.line}>
                       <hr/>
