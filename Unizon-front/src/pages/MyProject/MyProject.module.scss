@@ -15,3 +15,37 @@
     text-decoration: none !important;
     color: "#FFFFFF" !important;
 }
+
+.inf {
+    background-color: #fff;
+    border: 1px solid #dedede;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 300px;
+    margin-bottom: 15px;
+}
+
+.infTitle {
+    font-size: 22px;
+    color: #383838;
+    margin-bottom: 25px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.partTitle {
+    font-size: 17px;
+    display: flex;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.count {
+    margin-left: 15px;
+    color: #a42eff;
+}
+
+.command {
+    font-size: 17px;
+    
+}
