@@ -25,7 +25,7 @@ export const TagsBlock = ({ items, isLoading = true }) => {
 };
 
   return (
-    <SideBlock title="Тэги">
+    <SideBlock title="Вакансии">
       <List>
         {(isLoading ? [...Array(5)] : items).map((name, i) => (
           <Link onClick={onClickTag}

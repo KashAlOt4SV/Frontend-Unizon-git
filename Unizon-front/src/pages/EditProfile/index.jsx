@@ -195,10 +195,10 @@ export const EditProfile = ({
                                     label={'Выбери свою роль*'}
                                     defaultValue={TypeOfUser}
                                     fullWidth>
-                                    <option selected="selected" value="investor">Я Инвестор, ищу новые проекты </option>
-                                    <option value="entrepreneur">Я предприниматель, у меня есть свой проект</option>
-                                    <option value="enthusiast">Я энтузиаст, ищу себе команду </option>
-                                    <option value="idk">Пока не определился</option>
+                                    <option selected="selected" value="Инвестор">Я Инвестор, ищу новые проекты </option>
+                                    <option value="Предприниматель">Я предприниматель, у меня есть свой проект</option>
+                                    <option value="Энтузиаст">Я энтузиаст, ищу себе команду </option>
+                                    <option value="">Пока не определился</option>
                                 </select>
                             </div>
                         </div>

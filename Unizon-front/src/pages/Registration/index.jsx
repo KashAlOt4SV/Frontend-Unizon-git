@@ -116,10 +116,10 @@ const ColorButton = styled(Button)(({ theme }) => ({
           onChange={handleChange} 
           label={'Выбери свою роль*'}
           fullWidth>
-          <option selected="selected" value="investor">Я инвестор, ищу новые проекты </option>
-          <option value="entrepreneur">Я предприниматель, у меня есть свой проект</option>
-          <option value="enthusiast">Я энтузиаст, ищу себе команду </option>
-          <option value="idk">Пока не определился</option>
+          <option selected="selected" value="Инвестор">Я инвестор, ищу новые проекты </option>
+          <option value="Предпринематель">Я предприниматель, у меня есть свой проект</option>
+          <option value="Энтузиаст">Я энтузиаст, ищу себе команду </option>
+          <option value="">Пока не определился</option>
         </select>
 
         <ColorButton className={styles.signButton} disabled = {!isValid} type='submit' size="large" variant="contained" fullWidth>

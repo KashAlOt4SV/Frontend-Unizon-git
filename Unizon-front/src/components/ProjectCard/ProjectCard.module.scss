@@ -1,0 +1,71 @@
+.root {
+    background-color: #fff;
+    border: 1px solid #dedede;
+    border-radius: 15px;
+    overflow: hidden;
+    height: 300px;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 90px;
+    margin-right: 10px;
+    margin-left: 25px;
+    margin-top: 25px;
+    position: absolute;
+}
+
+.userName {
+    font-weight: 500;
+    font-size: 28px;
+    margin-top: 85px;
+    margin-left: 185px;
+    position: absolute;
+}
+
+.aboutMe {
+    margin-left: 185px;
+}
+
+.typeOfUser {
+    font-size: 22px;
+    margin-top: 200px;
+    margin-left: 1025px;
+    position: absolute;
+    color: #a42eff;
+}
+
+.interests {
+    margin-left: 185px;
+}
+
+.userInfo {
+    position: absolute;
+    margin-top: 110px;
+}
+
+.editAvatar {
+    margin-left: 50px;
+    margin-top: 185px;
+    width: 100px;
+    height: 50px;
+}
+
+.editButton {
+    margin-left: 1100px;
+    margin-top: 5px;
+}
+
+.count {
+    position: absolute;
+    left: 1200px;
+    top: 350px;
+}
+
+.countCommand {
+    position: absolute;
+    left: 1430px;
+    top: 372px;
+}

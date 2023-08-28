@@ -198,6 +198,12 @@ export const SideBar = () => {
             <List>
             {['Главная', 'Мой проект', 'Друзья', 'Сообщения', 'Вакансии', 'Проекты'].map((text, index) => (
                 <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                  {index === 0 ? <Link to = '/' ></Link> : null}
+                  {index === 1 ? <Link to = '/myProject'></Link> : null}
+                  {index === 2 ? <Link to = '/friens'></Link> : null}
+                  {index === 3 ? <Link to = '/messages'></Link> : null}
+                  {index === 4 ? <Link to = '/vacancy'></Link> : null}
+                  {index === 5 ? <Link to = '/projects'></Link> : null}
                 <ListItemButton
                     sx={{
                     minHeight: 48,
