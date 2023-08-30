@@ -6,7 +6,7 @@ export { NewProject } from "./Registration/entrepreneur"
 export { Login } from "./Login";
 export { FiltHome } from "./FiltHome";
 export { UserPage } from "./UserPage";
-export { Friends } from "./Friends";
+export { Friends } from "./Friends/Friends";
 export { Messages } from "./Messages";
 export { MyProject } from "./MyProject";
 export { Projects } from "./Projects";
