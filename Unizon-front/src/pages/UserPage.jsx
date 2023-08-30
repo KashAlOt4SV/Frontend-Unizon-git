@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { fetchFilterUserPosts } from '../redux/slices/posts';
+import { fetchUser } from '../redux/slices/auth';
 import { FriendsBlock } from '../components/FriendsBlock';
 import axios from '../axios'
 import {useParams} from "react-router-dom";
@@ -20,7 +21,7 @@ export const UserPage = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
-
+    const [userInfo, setUserInfo] = React.useState('');
     const [imageUrl, setImageUrl] = React.useState('');
     const handleChangeFile = async(event) => {
     try {
@@ -36,6 +37,7 @@ export const UserPage = () => {
   };
 
     React.useEffect(() => {
+        dispatch(fetchUser(id));
         dispatch(fetchFilterUserPosts(id));
     }, []);
 
@@ -44,7 +46,8 @@ export const UserPage = () => {
     }
 
 
-    
+    console.log(userData);
+
     return (
         <div>
             <UserCard

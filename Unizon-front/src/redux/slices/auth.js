@@ -21,6 +21,11 @@ export const fetchSwitchPassword = createAsyncThunk('auth/fetchSwitchPassword', 
     return data;
 });
 
+export const fetchUser = createAsyncThunk('auth/fetchUser', async (id) => {
+    const { data } = await axios.get(`/user-page/${id}`);
+    return data;
+});
+
 const initialState = {
     data: null,
     status: 'loading',
@@ -82,7 +87,19 @@ const authSlice = createSlice({
         [fetchSwitchPassword.rejected]: (state) => {
             state.status = 'error';
             state.data = null;
-        }
+        },
+        [fetchUser.pending]: (state) => {
+            state.status = 'loading';
+            state.data = null;
+        },
+        [fetchUser.fulfilled]: (state, action) => {
+            state.status = 'loaded';
+            state.data = action.payload; 
+        },
+        [fetchUser.rejected]: (state) => {
+            state.status = 'error';
+            state.data = null;
+        },
     }
 });
 

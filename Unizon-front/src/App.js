@@ -33,7 +33,7 @@ function App() {
           <Route path='/edit-profile/:id' element = {<EditProfile />}/>
           <Route path='/login' element = {<Login />}/>
           <Route path='/register' element = {<Registration />}/>
-          <Route path='/friens' element = {<Friends />}/>
+          <Route path='/friends' element = {<Friends />}/>
           <Route path='/messages' element = {<Messages />}/>
           <Route path='/myProject' element = {<MyProject />}/>
           <Route path='/projects' element = {<Projects />}/>

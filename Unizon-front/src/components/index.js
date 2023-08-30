@@ -9,4 +9,3 @@ export * from "./UserCard";
 export * from "./FriendsBlock";
 export * from "./SideBar";
 export * from "./ProjectCard";
-export * from "./Friend/Friend";

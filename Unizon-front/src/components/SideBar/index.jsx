@@ -200,7 +200,7 @@ export const SideBar = () => {
                 <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                   {index === 0 ? <Link to = '/' ></Link> : null}
                   {index === 1 ? <Link to = '/myProject'></Link> : null}
-                  {index === 2 ? <Link to = '/friens'></Link> : null}
+                  {index === 2 ? <Link to = '/friends'></Link> : null}
                   {index === 3 ? <Link to = '/messages'></Link> : null}
                   {index === 4 ? <Link to = '/vacancy'></Link> : null}
                   {index === 5 ? <Link to = '/projects'></Link> : null}
@@ -220,7 +220,7 @@ export const SideBar = () => {
                     >
                     {index === 0 ? <Link to = '/' ><HomeIcon sx={location.pathname === '/' ? {color: colorButton} : {color: grey}}/></Link> : null}
                     {index === 1 ? <Link to = '/myProject'><GroupsIcon sx={location.pathname === '/myProject' ? {color: colorButton} : {color: grey}}/></Link> : null}
-                    {index === 2 ? <Link to = '/friens'><GroupIcon sx={location.pathname === '/friens' ? {color: colorButton} : {color: grey}}/></Link> : null}
+                    {index === 2 ? <Link to = '/friends'><GroupIcon sx={location.pathname === '/friends' ? {color: colorButton} : {color: grey}}/></Link> : null}
                     {index === 3 ? <Link to = '/messages'><ForumIcon sx={location.pathname === '/messages' ? {color: colorButton} : {color: grey}}/></Link> : null}
                     {index === 4 ? <Link to = '/vacancy'><RecentActorsIcon sx={location.pathname === '/vacancy' ? {color: colorButton} : {color: grey}}/></Link> : null}
                     {index === 5 ? <Link to = '/projects'><ReceiptLongIcon sx={location.pathname === '/projects' ? {color: colorButton} : {color: grey}}/></Link> : null}

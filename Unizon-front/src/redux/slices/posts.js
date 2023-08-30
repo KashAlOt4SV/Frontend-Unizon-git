@@ -55,7 +55,7 @@ export const fetchCountLikes = createAsyncThunk('posts/fetchCountLikes', async (
 });
 
 export const fetchFilterUserPosts = createAsyncThunk('posts/fetchFilterPosts', async (id) => {
-    const {data} = await axios.get(`/user-page/${id}`);
+    const {data} = await axios.get(`/user-posts/${id}`);
     return data;
 });
 
