@@ -9,7 +9,7 @@ import { fetchFilterUserPosts } from '../redux/slices/posts';
 import { fetchUser } from '../redux/slices/auth';
 import { FriendsBlock } from '../components/FriendsBlock';
 import axios from '../axios'
-import {useParams} from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 
 
@@ -19,43 +19,19 @@ export const UserPage = () => {
     const {posts} = useSelector(state => state.posts);
     const isPostsLoading = posts.status == 'loading';
     const dispatch = useDispatch();
-    const { id } = useParams();
-
+    const location = useLocation();
     const [userInfo, setUserInfo] = React.useState('');
-    const [imageUrl, setImageUrl] = React.useState('');
-    const handleChangeFile = async(event) => {
-    try {
-      const formData = new FormData();
-      const file = event.target.files[0];
-      formData.append('image', file);
-      const { data } = await axios.post('/upload', formData);
-      setImageUrl(data.url);
-    } catch (err) {
-      console.warn(err);
-      alert('Ошибка при загрузке файла!')
-    }
-  };
+    let { id } = useParams();
+
+    
 
     React.useEffect(() => {
-        dispatch(fetchUser(id));
         dispatch(fetchFilterUserPosts(id));
     }, []);
 
-    if (!isAuth) {
-        return <Navigate to={`/user-page/${id}`} />
-    }
-
-
-    console.log(userData);
-
     return (
         <div>
-            <UserCard
-                fullName={userData.fullName}
-                avatarUrl={userData.avatarUrl}
-                typeOfUser={userData.typeOfUser}
-                interests={userData.interests}
-            />
+            <UserCard/>
           <Grid container spacing={4}>
             <Grid xs={8} item>
               {(isPostsLoading?[...Array(5)] : posts.items).map((obj, index) => 
@@ -83,6 +59,7 @@ export const UserPage = () => {
                   {
                     user: {
                       fullName: 'Аня Дацюк',
+                      id: '64d8d91ee73a17899c928763',
                       avatarUrl: 'https://sun1-47.userapi.com/impg/viwowJUBwlXCzyADq2jDduNmtJ4BeqWubBho_w/LiMLJdXWZLw.jpg?size=1440x1440&quality=95&sign=0cce24a304d34739ccd2243114a25b1c&type=album',
                     },
                     text: 'Инвестор',
@@ -90,6 +67,7 @@ export const UserPage = () => {
                   {
                     user: {
                       fullName: 'Ашот Шайкин',
+                      id: '64d8d91ee73a17899c928763',
                       avatarUrl: 'https://sun9-53.userapi.com/impg/LfC9UkbKOKliwa9S-fcybijpO6X3Sb0RT-9fcQ/2AzcQR_HTmE.jpg?size=720x1080&quality=95&sign=52990859d295b8943b7593b7cbfb2657&type=album',
                     },
                     text: 'Предпринематель',
