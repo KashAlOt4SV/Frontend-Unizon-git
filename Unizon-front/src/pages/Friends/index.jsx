@@ -23,28 +23,18 @@ export const Friends = () => {
         console.warn(err);
         })
     }, []);
-    if (data) {
-        const dataFriends = (FriendsId) => {
-        let i = 0;
-        let arr = [];
-        for(i; i < FriendsId.length; i++) {
-            console.log(FriendsId[i]);
-            axios
-            .get(`/user-page/${FriendsId[i]}`)
-            .then(res => {
-                arr.push({
-                    avatarUrl:res.avatarUrl,
-                    fullName:res.fullName,
-                    typeOfUser:res.typeOfUser
-                })
-            });
-            
-        };
-        console.log(arr)
-        friends.push(arr);
+    const new_array_of_friends = [];
+    for (let i = 0; i < userData.friends.length; i++) {
+        axios
+            .get(`user-page/${userData.friends[i]}`)
+            .then((res) => {
+                new_array_of_friends.push(res.data);
+            })
+            .catch((err) => {
+            console.warn(err);
+            })
     }
-}
-    
+    console.log(new_array_of_friends);
 
     
     return (
