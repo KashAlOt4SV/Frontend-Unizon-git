@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import { Post } from '../components/Post';
 import { fetchFilterUserPosts } from '../redux/slices/posts';
-import { fetchUser } from '../redux/slices/auth';
+import { fetchUser, selectIsAuth } from '../redux/slices/auth';
 import { FriendsBlock } from '../components/FriendsBlock';
 import axios from '../axios'
 import { useParams, useLocation } from "react-router-dom";
@@ -14,7 +14,7 @@ import { useParams, useLocation } from "react-router-dom";
 
 
 export const UserPage = () => {
-    const isAuth = useSelector(UserID);
+    const isAuth = useSelector(selectIsAuth)
     const userData = useSelector(state => state.auth.data);
     const {posts} = useSelector(state => state.posts);
     const isPostsLoading = posts.status == 'loading';
@@ -22,14 +22,13 @@ export const UserPage = () => {
     const location = useLocation();
     const [userInfo, setUserInfo] = React.useState('');
     let { id } = useParams();
-
     
-
     React.useEffect(() => {
         dispatch(fetchFilterUserPosts(id));
     }, []);
 
     return (
+      isAuth ? (
         <div>
             <UserCard/>
           <Grid container spacing={4}>
@@ -78,5 +77,10 @@ export const UserPage = () => {
             </Grid>
           </Grid>
         </div>
+      ) : (
+        <div>
+        </div>
+      )
+        
     )
 }

@@ -34,8 +34,7 @@ export const Home = () => {
 
   const handleTabs = (e, val) => {
     setValue(val)
-  } 
-
+  }
 
   return (
     <>
@@ -51,9 +50,10 @@ export const Home = () => {
           ) : (
             <Post
               id={obj._id}
+              userId={obj.user._id}
               title={obj.title}
               imageUrl={obj.imageUrl ? `http://localhost:5555${obj.imageUrl}` : ''}
-              user={obj.user}
+              user={(obj.project) ? obj.project : obj.user}
               createdAt={obj.createdAt}
               viewsCount={obj.viewsCount}
               commentsCount={3}

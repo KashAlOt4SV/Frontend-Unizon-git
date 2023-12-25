@@ -26,6 +26,11 @@ export const fetchUser = createAsyncThunk('auth/fetchUser', async (id) => {
     return data;
 });
 
+export const addFriend = createAsyncThunk('/addFriend', async (id) => {
+    const { data } = await axios.patch(`/addFriend/${id}`);
+    return data;
+});
+
 const initialState = {
     data: null,
     status: 'loading',

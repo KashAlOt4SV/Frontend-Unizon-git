@@ -33,7 +33,6 @@ export const MyProject = ({ items }) => {
     axios
         .get(`/ProjectUser`)
         .then((res) => {
-        console.log(res);
         setData(res.data);
         setLoading(false);
         })
@@ -42,8 +41,6 @@ export const MyProject = ({ items }) => {
         })
     }, []);
     const colorButton = '#a42eff'; 
-
-    console.log(data)
 
     return (
         (data) ? 

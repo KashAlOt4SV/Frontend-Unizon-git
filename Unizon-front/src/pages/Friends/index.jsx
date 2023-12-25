@@ -11,7 +11,20 @@ export const Friends = () => {
     const userData = useSelector(state => state.auth.data);
     let friends = []
 
-    const dataFriends = (FriendsId) => {
+    React.useEffect(() => {
+    axios
+        .get(`/auth/me`)
+        .then((res) => {
+        console.log(res);
+        setData(res.data);
+        setLoading(false);
+        })
+        .catch((err) => {
+        console.warn(err);
+        })
+    }, []);
+    if (data) {
+        const dataFriends = (FriendsId) => {
         let i = 0;
         let arr = [];
         for(i; i < FriendsId.length; i++) {
@@ -30,22 +43,12 @@ export const Friends = () => {
         console.log(arr)
         friends.push(arr);
     }
+}
+    
 
-    dataFriends(userData.friends)
-
-    React.useEffect(() => {
-    axios
-        .get(`/auth/me`)
-        .then((res) => {
-        console.log(res);
-        setData(res.data);
-        setLoading(false);
-        })
-        .catch((err) => {
-        console.warn(err);
-        })
-    }, []);
+    
     return (
+        data ? (
         <div>
             <Grid container spacing={4}>
                 <Grid xs={8} item>
@@ -78,5 +81,20 @@ export const Friends = () => {
                 </Grid>
             </Grid>
         </div>
+        ) : (
+            <div>
+            <Grid container spacing={4}>
+                <Grid xs={8} item>
+                    Войдите в аккаунт, чтобы добавить друзей
+                </Grid>
+                <Grid xs={4} item>
+                    <div>
+                        
+                    </div>
+                </Grid>
+            </Grid>
+        </div>
+        )
+        
     )
 }

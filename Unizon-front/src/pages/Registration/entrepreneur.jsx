@@ -30,7 +30,7 @@ import {
 import axios from '../../axios';
 import styles from './Enterpreneur.module.scss';
 
-const steps = ['Основная информация', 'Инвестиции', 'Вашей команде не нужны пополнения?'];
+const steps = ['', '', ''];
 
 export const NewProject =() => {
   const navigate = useNavigate()

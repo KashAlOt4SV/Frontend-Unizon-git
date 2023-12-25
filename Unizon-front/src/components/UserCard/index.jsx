@@ -1,34 +1,36 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './UserCard.module.scss';
 import Button from '@mui/material/Button';
 import axios from '../../axios'
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { Link, useParams, useLocation} from "react-router-dom";
+import { addFriend } from '../../redux/slices/auth';
 
 export const UserCard = ({
+    _id
 }) => {
+    const dispatch = useDispatch()
     const [userInfo, setUserInfo] = React.useState('');
-    let {id} = useParams();
-    const location = useLocation();
-
+    const [itemsOfUser, setItemsOfUser] = React.useState({});
+    const [fullName, setFullName] = React.useState('')
+    let { id } = useParams();
+    const userData = useSelector(state => state.auth.data);
     React.useEffect(() => {
-      if ((userData) && location.pathname === `/user-page/${userData._id}`) {
-        id  = userData._id;
-      }
+        console.log(id)
         axios
         .get(`/user-page/${id}`)
         .then((res) => {
           setUserInfo(res.data);
+          setFullName(userInfo.fullName)
+          setItemsOfUser({avatarUrl: userInfo.avatarUrl, fullName:{fullName}, email: userInfo.email, interests: userInfo.interests, typeOfUser: userInfo.typeOfUser})
         });
     }, []);
-    const fullName = userInfo.fullName;
-    const userData = useSelector(state => state.auth.data);
-    console.log(userData, userInfo)
-    const itemsOfUser = {avatarUrl: userInfo.avatarUrl, fullName:{fullName}, email: userInfo.email, interests: userInfo.interests, typeOfUser: userInfo.typeOfUser}
-    console.log()
-    
+
+    const onClickAddFriend = () => {
+      dispatch(addFriend(id));
+  };
 
     return (
         <div className={styles.root}>
@@ -48,7 +50,13 @@ export const UserCard = ({
                     </IconButton>
                 </Link>
             </div>
-            ) : (null)}
+            ) : (
+                <div className={styles.addToFriends} onClick={onClickAddFriend}>
+                    <Button variant="contained">
+                        Добавить в друзья
+                    </Button>
+                </div>
+            )}
             <div>
                 <em className={styles.typeOfUser}>{userInfo.typeOfUser}</em>
             </div>
