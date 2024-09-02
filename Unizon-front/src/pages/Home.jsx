@@ -72,7 +72,7 @@ export const Home = () => {
                   fullName: 'Вася Пупкин',
                   avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
                 },
-                text: 'Это тестовый комментарий1',
+                text: 'Это тестовый комментарий',
               },
               {
                 user: {
